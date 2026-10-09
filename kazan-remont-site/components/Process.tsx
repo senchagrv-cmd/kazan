@@ -93,12 +93,12 @@ function CheckIcon() {
 }
 
 export default function Process() {
-  const [activeStep, setActiveStep] = useState(0);
+  const [activeStep, setActiveStep] = useState<number | null>(0);
   const sectionRef = useRef<HTMLElement>(null);
   const itemRefs = useRef<(HTMLLIElement | null)[]>([]);
   const userPaused = useRef(false);
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
-  const step = steps[activeStep];
+  const step = steps[activeStep ?? 0];
 
   const stopAutoplay = () => {
     if (intervalRef.current) {
@@ -110,9 +110,10 @@ export default function Process() {
   const startAutoplay = () => {
     if (userPaused.current || intervalRef.current) return;
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    if (window.matchMedia("(max-width: 767px)").matches) return;
 
     intervalRef.current = setInterval(() => {
-      setActiveStep((prev) => (prev + 1) % steps.length);
+      setActiveStep((prev) => ((prev ?? 0) + 1) % steps.length);
     }, 2000);
   };
 
@@ -140,6 +141,7 @@ export default function Process() {
 
   useEffect(() => {
     if (userPaused.current) return;
+    if (window.matchMedia("(max-width: 767px)").matches) return;
     if (window.matchMedia("(min-width: 1024px)").matches) return;
     const section = sectionRef.current;
     if (!section) return;
@@ -157,6 +159,12 @@ export default function Process() {
     userPaused.current = true;
     stopAutoplay();
     setActiveStep(index);
+  };
+
+  const toggleAccordion = (index: number) => {
+    userPaused.current = true;
+    stopAutoplay();
+    setActiveStep((prev) => (prev === index ? null : index));
   };
 
   return (
@@ -185,7 +193,68 @@ export default function Process() {
             </div>
           </FadeIn>
 
-          <div className="grid grid-cols-1 items-start gap-12 lg:grid-cols-12">
+          <div className="md:hidden">
+            {steps.map((item, index) => {
+              const isOpen = activeStep === index;
+              return (
+                <article
+                  key={item.num}
+                  className={`mb-3 overflow-hidden rounded-xl border border-[rgba(16,17,20,0.08)] ${
+                    isOpen ? "bg-[#E5EDE5]" : "bg-white"
+                  }`}
+                >
+                  <button
+                    type="button"
+                    aria-expanded={isOpen}
+                    onClick={() => toggleAccordion(index)}
+                    className="flex w-full cursor-pointer items-center justify-between p-4 text-left"
+                  >
+                    <span className="flex items-center gap-3">
+                      <span className="text-sm font-bold text-[#244C3A]">
+                        {item.num}
+                      </span>
+                      <span className="text-base font-medium text-[#101114]">
+                        {item.title}
+                      </span>
+                    </span>
+                    <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-[rgba(16,17,20,0.10)] text-sm text-[#101114] transition-transform duration-300">
+                      {isOpen ? "−" : "+"}
+                    </span>
+                  </button>
+                  <div
+                    className={`overflow-hidden transition-all duration-300 ease-in-out ${
+                      isOpen ? "max-h-[500px] opacity-100" : "max-h-0 opacity-0"
+                    }`}
+                  >
+                    <div className="p-4 pt-0">
+                      <p className="text-sm leading-relaxed text-[#6F727A]">
+                        {item.desc}
+                      </p>
+                      <ul className="mt-4 flex flex-col gap-2">
+                        {item.details.map((detail) => (
+                          <li
+                            key={detail}
+                            className="flex items-start gap-2 text-sm text-[#101114]"
+                          >
+                            <CheckIcon />
+                            {detail}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+                </article>
+              );
+            })}
+            <Link
+              href="/#calculator"
+              className="mt-6 inline-flex w-full items-center justify-center rounded-xl bg-[#C96F4A] px-6 py-3 font-medium text-white transition hover:bg-[#AE5938]"
+            >
+              Рассчитать стоимость →
+            </Link>
+          </div>
+
+          <div className="hidden grid-cols-1 items-start gap-12 md:grid lg:grid-cols-12">
             <nav
               aria-label="Этапы ремонта"
               className="lg:col-span-4 lg:self-start"

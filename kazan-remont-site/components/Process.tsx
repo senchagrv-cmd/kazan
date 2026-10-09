@@ -141,6 +141,11 @@ export default function Process() {
   useEffect(() => {
     if (userPaused.current) return;
     if (window.matchMedia("(min-width: 1024px)").matches) return;
+    const section = sectionRef.current;
+    if (!section) return;
+    const rect = section.getBoundingClientRect();
+    const inView = rect.top < window.innerHeight && rect.bottom > 0;
+    if (!inView) return;
     itemRefs.current[activeStep]?.scrollIntoView({
       behavior: "smooth",
       block: "nearest",

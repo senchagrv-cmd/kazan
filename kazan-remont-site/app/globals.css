@@ -1,0 +1,323 @@
+@import "tailwindcss";
+
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+:root {
+  --background: #f7f7f5;
+  --foreground: #101114;
+  --muted: #6f727a;
+  --accent: #244C3A;
+  --surface-dark: #17181c;
+  --border: rgba(16, 17, 20, 0.1);
+  --border-dark: rgba(255, 255, 255, 0.12);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-inter), system-ui, sans-serif;
+}
+
+@theme {
+  --ease-brand: cubic-bezier(0.22, 1, 0.36, 1);
+
+  --animate-chat-in: chat-in 200ms var(--ease-brand) both;
+  --animate-fade-in: fade-in 300ms ease-out both;
+  --animate-fade-slide-in: fade-slide-in 400ms var(--ease-brand) both;
+  --animate-hero-fade: hero-fade 700ms var(--ease-brand) both;
+  --animate-hero-rise: hero-rise 700ms var(--ease-brand) 200ms both;
+  --animate-step-in: step-in 300ms var(--ease-brand) 100ms both;
+  --animate-row-in: row-in 500ms var(--ease-brand) both;
+  --animate-meta-in: hero-fade 400ms var(--ease-brand) both;
+  --animate-check-pop: check-pop 500ms var(--ease-brand) both;
+  --animate-row-flash: row-flash 1400ms ease-out both;
+  --animate-dot-pulse: dot-pulse 2000ms ease-in-out infinite;
+  --animate-modal-in: modal-in 300ms var(--ease-brand) both;
+
+  @keyframes modal-in {
+    from {
+      opacity: 0;
+      transform: scale(0.95) translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1) translateY(0);
+    }
+  }
+
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes fade-slide-in {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* AI-чат: появление окна */
+  @keyframes chat-in {
+    from {
+      opacity: 0;
+      transform: scale(0.95);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  /* Калькулятор: новый шаг — fade-in + slide-right */
+  @keyframes step-in {
+    from {
+      opacity: 0;
+      transform: translateX(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  /* Поочерёдное появление строк дашборда при загрузке */
+  @keyframes row-in {
+    from {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* ✓ появляется с лёгким «щелчком» при завершении этапа */
+  @keyframes check-pop {
+    0% {
+      opacity: 0;
+      transform: scale(0.5);
+    }
+    60% {
+      opacity: 1;
+      transform: scale(1.25);
+    }
+    100% {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  /* Мягкая зелёная вспышка строки при завершении этапа */
+  @keyframes row-flash {
+    from {
+      background-color: rgba(74, 222, 128, 0.14);
+    }
+    to {
+      background-color: rgba(74, 222, 128, 0);
+    }
+  }
+
+  /* Пульсация зелёной точки текущего события */
+  @keyframes dot-pulse {
+    0%,
+    100% {
+      transform: scale(1);
+      box-shadow: 0 0 0 0 rgba(74, 222, 128, 0.4);
+    }
+    50% {
+      transform: scale(1.2);
+      box-shadow: 0 0 0 6px rgba(74, 222, 128, 0);
+    }
+  }
+
+  @keyframes hero-fade {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes hero-rise {
+    from {
+      opacity: 0;
+      transform: translateY(16px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-inter), system-ui, sans-serif;
+  -webkit-hyphens: none;
+  hyphens: none;
+  overflow-wrap: break-word;
+  overflow-x: hidden;
+}
+
+.quiz-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 24px;
+  margin: 0;
+  cursor: pointer;
+  outline: none;
+  background: linear-gradient(
+    to right,
+    #244C3A 0%,
+    #244C3A var(--progress, 19%),
+    rgba(16, 17, 20, 0.1) var(--progress, 19%),
+    rgba(16, 17, 20, 0.1) 100%
+  );
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 100% 6px;
+  border-radius: 9999px;
+}
+
+.quiz-slider::-webkit-slider-runnable-track {
+  height: 6px;
+  border: 0;
+  border-radius: 9999px;
+  background: transparent;
+}
+
+.quiz-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 24px;
+  height: 24px;
+  margin-top: -9px;
+  cursor: pointer;
+  border: 3px solid #fff;
+  border-radius: 50%;
+  background: #244C3A;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  transition: transform 0.15s ease;
+}
+
+.quiz-slider::-webkit-slider-thumb:hover {
+  transform: scale(1.1);
+}
+
+.quiz-slider::-moz-range-track {
+  height: 6px;
+  border: 0;
+  border-radius: 9999px;
+  background: rgba(16, 17, 20, 0.1);
+}
+
+.quiz-slider::-moz-range-progress {
+  height: 6px;
+  border-radius: 9999px;
+  background: #244C3A;
+}
+
+.quiz-slider::-moz-range-thumb {
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+  border: 3px solid #fff;
+  border-radius: 50%;
+  background: #244C3A;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+.hover-lift {
+  transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.hover-lift:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 40px -12px rgba(16, 17, 20, 0.12);
+}
+
+.hover-lift-dark:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.4);
+}
+
+.hover-button {
+  transition: all 0.2s ease;
+}
+
+.hover-button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 20px -4px rgba(201, 111, 74, 0.4);
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.6s ease-out forwards;
+}
+
+@keyframes countUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-count-up {
+  animation: countUp 0.8s ease-out forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hover-lift,
+  .hover-lift-dark,
+  .hover-button {
+    transition: none;
+  }
+
+  .hover-lift:hover,
+  .hover-lift-dark:hover,
+  .hover-button:hover {
+    transform: none;
+  }
+
+  .animate-fade-in-up,
+  .animate-count-up {
+    animation: none;
+  }
+}

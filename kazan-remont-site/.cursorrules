@@ -1,0 +1,80 @@
+# ПРОЕКТ
+Лендинг ремонта квартир в Казани. Средний сегмент. ЦА: люди 28-50 лет, покупают ремонт под ключ.
+
+# ВИЗУАЛЬНАЯ КОНЦЕПЦИЯ
+- Вдохновение: Stripe (ясность) + Linear (точность интерфейса)
+- Ощущение: "ремонт как управляемый продукт", не "сайт строительной компании"
+- НЕ копировать бренды, использовать принципы
+
+# ЦВЕТА
+- Основной фон: #F7F7F5 (тёплый светлый)
+- Текст: #101114 (почти чёрный)
+- Акцент: #635BFF (индиго, только для CTA, прогресс-баров, статусов)
+- Тёмные секции: #17181C (dashboard, problem protocol, final CTA)
+- Вторичный текст: #6F727A
+- Границы: rgba(16,17,20,0.10)
+- Тёмные границы: rgba(255,255,255,0.12)
+
+# ТИПОГРАФИКА
+- Шрифт: Inter (подключи через next/font)
+- H1: 64-80px (desktop), 44-52px (mobile), font-weight 600-700, tracking-tight (-0.04em), line-height 0.95-1.05
+- H2: 48-64px (desktop), 36-44px (mobile), font-weight 600-700
+- Body: 16px, line-height 1.5
+- Large text: 18-20px, line-height 1.45-1.6
+- Small UI: 12-14px, line-height 1.35-1.45
+- Цифры/метрики: крупные, как продуктовые метрики
+
+# КОМПОНЕНТЫ
+- Кнопки: radius 10-12px, height 44-52px, padding 18-24px, font-weight 600, font-size 14-16px
+- Карточки: radius 14-18px, border 1px solid var(--border), минимальные тени (0 8px 30px rgba(0,0,0,0.06))
+- Inputs: height 48-56px, border 1px, radius 10-12px
+- Иконки: Lucide React, 16-20px, stroke 1.5-2px
+
+# АДАПТИВНОСТЬ
+- Mobile-first (70-80% трафика с мобильных)
+- Desktop: 12-column grid, max-width 1280-1360px, padding 24-48px
+- Mobile: 1 column, padding 16-20px
+- Sticky CTA на мобильном (fixed bottom, z-index 50)
+
+# АНИМАЦИИ
+- Только функциональные: fade-up, fade-in, progress reveal
+- Duration: 400-700ms, easing cubic-bezier(0.22, 1, 0.36, 1)
+- Hover: translateY(-1px), subtle border change
+- НЕ использовать тяжёлые анимации, blur, parallax, неон
+- LCP < 2.5s, производительность приоритет
+
+# СЕТКА И ОТСТУПЫ
+- Шкала отступов: 4, 8, 12, 16, 20, 24, 32, 40, 48, 64, 80, 96, 128
+- Между секциями (desktop): 120-180px
+- Между секциями (mobile): 72-112px
+
+# ЗАПРЕЩЕНО
+- Glassmorphism, неон, градиенты везде
+- Stock-фото строителей, рукопожатия, улыбающиеся прорабы
+- Огромные rounded pills (40px+)
+- Мультяшные иллюстрации, фальшивые 3D-рендеры
+- Чрезмерные тени, glowing UI
+- CAPS LOCK в заголовках
+- Кликбейтные CTA ("Узнать больше", "Отправить")
+
+# РИТМ СЕКЦИЙ
+Чередуй светлые и тёмные секции:
+- LIGHT: Hero, Calculator, Trust, Problems, Process, Materials, Cases, Reviews, FAQ
+- DARK: Problem Protocol, Dashboard/Design, Acceptance/QA, Final CTA
+
+# ПРИОРИТЕТЫ
+1. Конверсия
+2. Понятность
+3. Доверие
+4. Информационная иерархия
+5. Визуальная целостность
+6. Производительность
+
+# ФАЙЛЫ ПРОЕКТА
+- Копирайтинг: @docs/02-copywriting.txt
+- Структура сайта: @docs/03-structure.txt
+- Полная дизайн-система: @docs/design-system.md (читать только по явному запросу)
+
+# ГЛАВНОЕ ПРАВИЛО
+Если выбор между "визуально впечатляюще" и "понятно, спокойно, точно" — всегда выбирай второе.
+Сайт должен выглядеть как работа senior product designer, а не AI-generated design.

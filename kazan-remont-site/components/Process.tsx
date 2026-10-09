@@ -148,6 +148,7 @@ export default function Process() {
     const rect = section.getBoundingClientRect();
     const inView = rect.top < window.innerHeight && rect.bottom > 0;
     if (!inView) return;
+    if (activeStep === null) return;
     itemRefs.current[activeStep]?.scrollIntoView({
       behavior: "smooth",
       block: "nearest",
